@@ -1,0 +1,18 @@
+ZANDER INK GARMENT FLOW — TRELLO HISTORY IMPORT
+
+This is a separate app from your existing Production Board.
+
+1. BACK UP FIRST: in Garment Flow select Export Backup and save it. Also keep a Railway volume backup.
+2. In the NEW Garment Flow Railway project (not Production Board), add:
+  TRELLO_API_KEY = Trello API key
+  TRELLO_TOKEN = Trello access token
+  TRELLO_BOARD_ID = the Zander Ink Trello board ID
+  BOARD_ACCESS_KEY = a unique secret (recommended when exposing Trello access or customer data)
+Do not commit credentials to GitHub.
+3. Upload server.js and public/index.html from this package to the existing Garment Flow GitHub repo, keeping exact folder locations.
+4. After Railway is ACTIVE, visit Garment Flow and select Import Trello History.
+5. Each batch imports up to 100 cards with persisted progress on /app/data. If interrupted, press Import again to resume. The original Trello cards are never changed.
+6. Paid/completed lists are hidden in the main board by default. Use Completed or Show paid/completed lists to view them; search will also reveal these lists. Archived Trello cards can be found through search.
+7. Imported card details include title, description, due date, source link, list, attachment links, and checklist items when Trello provides them. Image links may need authentication and are NOT downloaded into the Railway volume. Open original Trello card for full attachment and comment history.
+8. Do not rely on this as your sole archive until counts and sample cards have been checked. Do not delete your Trello board.
+9. This import is a one-time historical copy. Subsequent Trello activity is NOT automatically mirrored by this update.
