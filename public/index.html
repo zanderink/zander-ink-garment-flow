@@ -4,6 +4,28 @@
 /* Trello-style single-card workspace */
 .modal{width:min(1160px,98vw);max-height:96vh;background:#f7f8fa}.modalhead{padding:12px 20px}.modalbody{grid-template-columns:minmax(0,1.4fr) minmax(300px,.85fr);gap:0;padding:0}.modalbody>section{padding:18px 23px}.rightpanel{background:#f2f3f6;padding:22px!important;border-left:1px solid #dfe2e8}.cardCover{height:190px;background:#f1f3f6;display:flex;justify-content:center;align-items:center;overflow:hidden;position:relative}.cardCover img{max-width:100%;height:100%;object-fit:contain}.cardCover .coverEmpty{color:#8b93a0;font-size:12px}.cardTopline{display:flex;align-items:center;gap:8px;margin-bottom:14px}.cardTopline .field{max-width:340px}.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.card-actions button{background:#e9ebef;border:0;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:700}.card-actions button:hover{background:#dfe2e8}.activity{display:flex;flex-direction:column;gap:12px;padding-top:15px}.activity-item{display:flex;gap:10px;font-size:12px}.activity-avatar{background:#cb2333;color:white;width:29px;height:29px;flex:none;display:grid;place-items:center;border-radius:50%;font-weight:800}.activity-body{background:white;padding:10px;border-radius:8px;min-width:0;word-break:break-word;flex:1}.activity-date{font-size:10px;color:#828895;margin-top:5px}.movePanel{display:none;position:fixed;inset:0;background:#10131aa3;z-index:110;align-items:center;justify-content:center;padding:20px}.movePanel.on{display:flex}.moveBox{background:white;border-radius:15px;width:min(420px,95vw);padding:22px;box-shadow:0 20px 60px #0005}.moveBox h3{margin:0 0 18px;font-size:19px}.moveBox label{font-weight:700;font-size:12px;display:block;margin:12px 0 6px}.modalfoot{z-index:4}.attachmentGallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:11px}.attachmentItem{padding:7px;border:1px solid #e0e3e7;background:white;border-radius:8px}.attachmentItem img{width:100%;height:78px;object-fit:contain;background:#f3f4f6}.attachmentItem button{font-size:10px;margin-top:5px}.activity-compose{display:flex;flex-direction:column;gap:8px}.card-title-input{font-size:23px;font-weight:800}.textbtn{border:0;background:transparent;color:#bf2030;cursor:pointer;font-weight:700}
 @media(max-width:850px){.modalbody{grid-template-columns:1fr}.modal{max-height:98vh}.rightpanel{border-left:0;border-top:1px solid #ddd}.cardCover{height:140px}}
+
+/* Receiving and checklist upgrade */
+.checklist-row{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid #edf0f4;font-size:13px}
+.checklist-row input[type=checkbox]{width:18px;height:18px;accent-color:#cf1f31;flex:none}
+.checklist-row.done .checklist-label{text-decoration:line-through;color:#7b8492}
+.checklist-label{flex:1;overflow-wrap:anywhere}.checklist-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0 5px}
+.checklist-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.checklist-actions button{font-size:11px}
+.checklist-add{display:flex;gap:6px;margin:8px 0 12px}.checklist-add input{min-width:0;flex:1}
+.garment-subtitle{font-size:12px;color:#637084;margin:5px 0 10px}.garment-hint{font-size:11px;color:#64748b}
+.size-presets{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.size-presets .btn{padding:7px 9px}
+.checkbtn{white-space:nowrap}.checklist-progress{height:6px;border-radius:6px;background:#e7ebef;overflow:hidden;margin:6px 0}.checklist-progress span{display:block;height:100%;background:#51853b}
+
+/* Garment checklists: same check/uncheck interaction as Trello */
+.garment-checklist{margin:12px 0 4px;border:1px solid #e0e4ea;border-radius:10px;background:#fff;overflow:hidden}
+.garment-checklist .checklist-row{display:grid;grid-template-columns:20px minmax(70px,1fr) 95px 94px;gap:8px;min-height:44px;padding:7px 11px;align-items:center}
+.garment-checklist .checklist-row:nth-child(odd){background:#fbfbfc}
+.garment-checklist .checklist-row input[type=number]{width:90px;max-width:100%;padding:6px;border:1px solid #cfd5df;border-radius:6px}
+.garment-checklist .checklist-row .checklist-label{font-weight:600}
+.garment-checklist .headrow{font-size:11px;color:#697587;display:grid;grid-template-columns:20px minmax(70px,1fr) 95px 94px;gap:8px;padding:9px 11px;background:#f3f4f6}
+.garment-checklist .partial{font-size:12px;color:#677285}.garment-checklist .checklist-row.done{background:#eef8ef}
+.garment-listbar{display:flex;gap:9px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+@media(max-width:600px){.garment-checklist .checklist-row,.garment-checklist .headrow{grid-template-columns:20px minmax(40px,1fr) 65px 65px;gap:5px}.garment-checklist .checklist-row input[type=number]{width:63px}}
 </style></head><body><div class="app"><aside class="side"><img class="logo" src="/logo.png" alt="Zander Ink"><div class="smallcap">GARMENT MANAGEMENT</div><button class="nav active" onclick="setView('board')">▦ <span>Order Board</span></button><button class="nav" onclick="setView('open')">◉ <span>Open Jobs</span></button><button class="nav" onclick="setView('completed')">✓ <span>Completed</span></button><a href="https://zander-ink-live-board-production.up.railway.app" target="_blank">▤ <span>Production Board ↗</span></a><div class="sidebottom">ZANDER INK · GARMENT FLOW<br>Separate from your live production board</div></aside><main class="main"><header class="top"><div class="brand"><small>ZANDER INK</small>Garment Flow</div><div class="actions"><input id="search" class="search" placeholder="Search jobs..." oninput="render()"><button class="btn" id="trelloImportBtn" onclick="beginTrelloImport()">Import Trello History</button><label style="font-size:12px;display:flex;align-items:center;gap:6px"><input type="checkbox" id="showHistory" onchange="render()"> Show paid/completed lists</label><button class="btn" onclick="downloadBackup()">↓ Export Backup</button><button class="btn" onclick="document.getElementById('import').click()">Import</button><input type="file" id="import" class="hidden" accept="application/json" onchange="importBackup(this)"><button class="btn red" onclick="newCard()">+ New Job</button></div></header><div class="intro"><div><h2>Order Management Board</h2><p>Drag cards between stages. Open a card to manage garments, quantities, artwork and receiving.</p></div><div class="pills"><div class="pill">Jobs <b id="jobTotal">0</b></div><div class="pill">Garments <b id="pieceTotal">0</b></div><button class="btn" onclick="newColumn()">+ Add List</button></div></div><div class="notice" id="banner">New application preview. Your existing Trello and Production Board data are not changed.</div><div id="board" class="board"></div></main></div>
 <div class="modalBackdrop" id="overlay" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modalhead"><h3 id="modalTitle">New Job</h3><button class="btn" onclick="closeModal()">✕ Close</button></div><div class="cardCover" id="cardCover"><span class="coverEmpty">Add a mockup or artwork</span></div><div class="modalbody"><section><div class="cardTopline"><span style="font-size:12px;color:#77808c">In list:</span><strong id="currentListName">New Orders</strong></div><div id="trelloOrigin" style="display:none;margin:8px 0;font-size:12px"></div><div class="card-actions"><button onclick="showMovePanel()">↔ Move Card</button><button onclick="document.getElementById('artFile').click()">▧ Add Artwork</button><button onclick="document.getElementById('notes').focus()">☰ Notes</button><button onclick="document.getElementById('dueDate').focus()">▦ Dates</button><button onclick="document.getElementById('commentInput').focus()">☏ Comment</button></div><div class="formgroup"><label>Job / customer name</label><input id="title" class="field card-title-input" placeholder="e.g. Patriots Choice Plumbing"></div><div class="grid2"><div class="formgroup"><label>Order stage</label><select class="field" id="column"></select></div><div class="formgroup"><label>In-hands / due date (optional)</label><input class="field" type="date" id="dueDate"></div></div><div class="grid2"><div class="formgroup"><label>Production type</label><select class="field" id="process"><option>Screen Print</option><option>Embroidery</option><option>DTF</option><option>Other</option></select></div><div class="formgroup"><label>Delivery</label><select class="field" id="delivery"><option>Pickup</option><option>Ship</option></select></div></div><div class="formgroup"><label>Notes / instructions</label><textarea class="field" id="notes" rows="3" placeholder="Print notes, deadlines, customer requests..."></textarea></div><div class="section" id="trelloHistory" style="display:none"><h4>Original Trello checklists</h4><div id="trelloChecklistDetails"></div></div><div class="section"><h4>Garments & check-in</h4><div class="muted">Add a style and color for each garment. Enter ordered quantities, then check in each size when it arrives.</div><div id="garments"></div><button class="btn red" onclick="addGarment()">+ Add Another Garment</button></div></section><aside class="rightpanel"><div class="formgroup"><label>Artwork / mockup</label><div class="preview" id="artPreview">No artwork attached</div><input style="margin-top:10px;width:100%;font-size:12px" id="artFile" type="file" accept="image/*" onchange="artUpload(this)"><button style="margin-top:7px" class="btn" onclick="clearArt()">Remove cover</button><div class="section"><h4>Attachments</h4><div class="muted">Store additional mockups and files with this card (images up to 2 MB each).</div><input type="file" multiple id="attachmentsInput" accept="image/*" style="max-width:100%;margin-top:8px" onchange="addAttachments(this)"><div id="attachmentGallery" class="attachmentGallery"></div></div></div><div class="formgroup"><label>Email</label><input id="email" class="field" type="email" placeholder="customer@company.com"></div><div class="formgroup"><label>Shipping address</label><textarea id="address" class="field" rows="3" placeholder="Street, city, state, ZIP"></textarea></div><div class="formgroup"><label>Order summary</label><div id="summary" class="totals">0 garments</div></div><div class="section"><h4>Comments and activity</h4><div class="activity-compose"><textarea id="commentInput" rows="3" class="field" placeholder="Write a comment..."></textarea><div style="display:flex;gap:6px;align-items:center"><input id="commentAuthor" class="field" style="max-width:130px" placeholder="Your initials" maxlength="30"><button class="btn red" onclick="addComment()">Add comment</button></div></div><div class="activity" id="activityLog"></div></div></aside></div><div class="modalfoot"><button id="deleteBtn" class="btn" style="color:#b31f2c" onclick="deleteCard()">Delete Card</button><div><button class="btn" onclick="closeModal()">Cancel</button> <button class="btn red" onclick="saveCard()">Save Job</button></div></div></div></div><div id="movePanel" class="movePanel" onclick="if(event.target===this)closeMovePanel()"><div class="moveBox"><div style="display:flex;justify-content:space-between"><h3>Move card</h3><button class="btn" onclick="closeMovePanel()">✕</button></div><label>Destination list</label><select id="moveList" class="field" onchange="updateMovePositions()"></select><label>Position</label><select id="movePosition" class="field"></select><div style="display:flex;gap:8px;margin-top:20px"><button class="btn" onclick="closeMovePanel()">Cancel</button><button class="btn red" style="flex:1" onclick="moveCardFromModal()">Move</button></div></div></div>
 <script>
@@ -53,6 +75,121 @@ function showMovePanel(){if(!edit)return;readForm();document.getElementById('mov
 function closeMovePanel(){document.getElementById('movePanel').classList.remove('on')}
 function updateMovePositions(){const id=document.getElementById('moveList').value;const n=db.cards.filter(c=>c.columnId===id&&c.id!==edit?.id).length;document.getElementById('movePosition').innerHTML=Array.from({length:n+1},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}
 async function moveCardFromModal(){if(!edit)return;const destination=document.getElementById('moveList').value;const position=+document.getElementById('movePosition').value;const original=edit.columnId;edit.columnId=destination;edit.order=position;document.getElementById('column').value=destination;document.getElementById('currentListName').textContent=db.columns.find(c=>c.id===destination)?.name||'';edit.activity=Array.isArray(edit.activity)?edit.activity:[];if(original!==destination)edit.activity.push({id:uid(),author:'System',message:'moved the card to '+(db.columns.find(c=>c.id===destination)?.name||''),at:new Date().toISOString()});closeMovePanel();await saveCard()}
+
+
+// Garment check-in and editable imported Trello checklists. Local changes save with Save Job;
+// the original Trello board is read-only and will not be modified.
+const adultSizes=['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL'];
+const youthSizes=['YS','YM','YL','YXL'];
+const allSizes=[...adultSizes,...youthSizes];
+const checkListNode=()=>document.getElementById('trelloChecklistDetails');
+function renderLegacyChecklists(){
+ const host=checkListNode(),sets=edit.trelloChecklists||[];
+ document.getElementById('trelloHistory').style.display='block';
+ host.innerHTML=sets.map((list,li)=>{
+  const items=list.items||[];const complete=items.filter(x=>x.done).length;
+  return `<div class="legacy-set" style="padding:8px 0 14px;border-bottom:1px solid #e2e5eb">
+    <div class="checklist-title"><strong>${esc(list.name||'Checklist')}</strong><span class="muted">${complete}/${items.length}</span></div>
+    <div class="checklist-progress"><span style="width:${items.length?100*complete/items.length:0}%"></span></div>
+    ${items.map((it,ii)=>`<label class="checklist-row ${it.done?'done':''}"><input type="checkbox" data-legacy-check="${li}:${ii}" ${it.done?'checked':''}><span class="checklist-label">${esc(it.name)}</span></label>`).join('')}
+    <div class="checklist-add"><input class="field" id="legacy-new-${li}" placeholder="Add checklist item (e.g. Large - 10)"><button class="btn" data-legacy-add="${li}">+ Add</button></div>
+   </div>`;
+ }).join('');
+ if(!sets.length)host.innerHTML='<p class="muted">No original Trello checklist. Add a list below if you want a basic checklist.</p>';
+ host.querySelectorAll('[data-legacy-check]').forEach(el=>el.onchange=()=>{const [li,ii]=el.dataset.legacyCheck.split(':').map(Number);edit.trelloChecklists[li].items[ii].done=el.checked;renderLegacyChecklists()});
+ host.querySelectorAll('[data-legacy-add]').forEach(el=>el.onclick=()=>{const li=Number(el.dataset.legacyAdd),input=document.getElementById('legacy-new-'+li),name=input.value.trim();if(!name)return;edit.trelloChecklists[li].items.push({id:uid(),name,done:false});renderLegacyChecklists()});
+}
+function addLegacyChecklist(){const name=prompt('Checklist name (e.g. Gildan - 8000)');if(!name?.trim())return;edit.trelloChecklists=edit.trelloChecklists||[];edit.trelloChecklists.push({id:uid(),name:name.trim(),items:[]});renderLegacyChecklists()}
+function normalizeImportedSize(x){const key=String(x||'').trim().toUpperCase().replace(/[ ._\-]/g,'');return ({XSMALL:'XS',EXTRASMALL:'XS',SMALL:'S',MEDIUM:'M',LARGE:'L',XLARGE:'XL',XLG:'XL',XXL:'2XL',XXXL:'3XL',XXXXL:'4XL','2XLARGE':'2XL','3XLARGE':'3XL','4XLARGE':'4XL','5XLARGE':'5XL','6XLARGE':'6XL',YOUTHSMALL:'YS',YOUTHMEDIUM:'YM',YOUTHLARGE:'YL',YOUTHXLARGE:'YXL',YS:'YS',YM:'YM',YL:'YL',YXL:'YXL'})[key]||(/^(?:[2-6]XL|XS|S|M|L|XL|YS|YM|YL|YXL)$/.test(key)?key:null)}
+function convertLegacyGarments(){
+ const checklists=edit.trelloChecklists||[];if(!checklists.length)return alert('No original checklist to convert.');
+ if(!confirm('Create garment rows from the original checklist? Original checklist items and their checkmarks will be kept. Please verify quantities and colors before saving.'))return;
+ let created=0;
+ for(const list of checklists){
+  const name=String(list.name||'');let brand='Gildan',style='8000';
+  const m=name.match(/^(.*?)\s*[-–]\s*([A-Za-z0-9-]+)\s*$/);if(m){brand=m[1].trim()||'Gildan';style=m[2].trim()||'8000'}else if(name.trim()){style=name.trim()}
+  let current=null;
+  for(const it of list.items||[]){const raw=String(it.name||'').trim();const match=raw.match(/^(.+?)\s*[-–:]\s*(\d+)\s*$/);const size=match?normalizeImportedSize(match[1]):null;
+   if(size&&current){current.quantities[size]=(current.quantities[size]||0)+Number(match[2]);if(it.done)current.received[size]=current.quantities[size];if(!current.visibleSizes.includes(size))current.visibleSizes.push(size)}
+   else if(!size&&raw){current={...freshGarment(),brand,style,color:raw,visibleSizes:[],quantities:{},received:{}};edit.garments.push(current);created++}
+  }
+ }
+ if(!created)return alert('No garment colors detected. You can add garments manually.');renderGarments();alert(created+' garment color rows created. Verify quantities and click Save Job to keep them.');
+}
+// Keep original card loader, then provide editable checklists on every card.
+const originalShowModal=showModal;
+showModal=function(){originalShowModal();renderLegacyChecklists()};
+const originalRenderGarments=renderGarments;
+renderGarments=function(){
+ originalRenderGarments();
+ for(const [idx,g] of (edit.garments||[]).entries()){
+  const el=document.querySelectorAll('#garments .garment')[idx];if(!el)continue;
+  if(!g.visibleSizes)g.visibleSizes=[...adultSizes];
+  let opts=el.querySelector('.garment-presets');
+  opts=document.createElement('div');opts.className='garment-presets';
+  opts.innerHTML=`<div class="garment-subtitle">Preset sizes · show or hide any size</div><div class="size-presets"><button type="button" class="btn" data-preset="adult">Adult XS–6XL</button><button type="button" class="btn" data-preset="youth">Youth S–XL</button><button type="button" class="btn" data-preset="both">Adult + Youth</button><button type="button" class="btn" data-preset="used">Hide zero-quantity sizes</button></div>`;
+  const toggleRow=el.querySelector('[data-size]')?.parentElement;
+  if(toggleRow)toggleRow.before(opts);
+  opts.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{const which=b.dataset.preset;g.visibleSizes=which==='adult'?[...adultSizes]:which==='youth'?[...youthSizes]:which==='both'?[...allSizes]:allSizes.filter(s=>Number(g.quantities?.[s]||0)>0);renderGarments()});
+  const colorInput=el.querySelector('[data-color]');if(colorInput){const list=document.createElement('datalist');list.id='color-list-'+g.id;list.innerHTML=(g.catalogColors||[]).map(c=>`<option value="${esc(c)}"></option>`).join('');colorInput.setAttribute('list',list.id);colorInput.after(list);}
+  const btn=el.querySelector('[data-search]');if(btn)btn.textContent='⌕ Search S&S / SanMar styles & colors';
+  const shown=g.visibleSizes||[];const buttonWrap=el.querySelector('[data-size]')?.parentElement;
+  if(buttonWrap){for(const sz of youthSizes){const b=document.createElement('button');b.className='sztoggle '+(shown.includes(sz)?'':'off');b.dataset.size=sz;b.textContent=sz;b.onclick=()=>toggleSize(g.id,sz);buttonWrap.appendChild(b)}}
+  // Original renderer computes adult-size header. Rebuild the table when youth sizes are used.
+  if(shown.some(sz=>youthSizes.includes(sz))){const tbody=el.querySelector('table.sizes');if(tbody){tbody.innerHTML=`<thead><tr><th></th>${shown.map(sz=>`<th>${sz}</th>`).join('')}</tr></thead><tbody><tr><th>Ordered</th>${shown.map(sz=>`<td><input class="szinp" data-qty="${sz}" type="number" min="0" value="${Number(g.quantities?.[sz]||0)}"></td>`).join('')}</tr><tr><th>Received</th>${shown.map(sz=>`<td><input aria-label="Received ${sz}" class="szinp" data-received="${sz}" type="number" min="0" max="${Number(g.quantities?.[sz]||0)}" value="${Number(g.received?.[sz]||0)}"><button data-check="${sz}" title="Mark received / undo" class="checkbtn ${g.quantities?.[sz]>0&&g.received?.[sz]>=g.quantities?.[sz]?'done':''}">${g.quantities?.[sz]>0&&g.received?.[sz]>=g.quantities?.[sz]?'✓':'○'}</button></td>`).join('')}</tr></tbody>`;tbody.querySelectorAll('[data-qty]').forEach(b=>b.oninput=()=>setQty(g.id,b.dataset.qty,b.value));tbody.querySelectorAll('[data-received]').forEach(b=>b.oninput=()=>setReceived(g.id,b.dataset.received,b.value));tbody.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>markReceived(g.id,b.dataset.check));}}
+ }
+};
+searchCatalog=async function(g,e){
+ const results=e.querySelector('.results');results.classList.remove('hidden');results.innerHTML='<div class="result">Searching supplier styles and colors...</div>';
+ try{const r=await api('/api/catalog?provider='+encodeURIComponent(g.supplier==='S&S'?'ss':'sanmar')+'&q='+encodeURIComponent(g.style));
+  if(!r.items?.length){results.innerHTML='<div class="result">No matches. You can type style and color manually.</div>';return}
+  const styles=new Map(),colors=new Set();for(const x of r.items){if(!x.color)continue;colors.add(x.color);styles.set([x.brand,x.style,x.color].join('|'),x)}
+  g.catalogColors=[...colors].sort();results.innerHTML='<div class="muted">Select a color below (or type one manually):</div>';
+  for(const x of [...styles.values()].slice(0,100)){const n=document.createElement('button');n.type='button';n.className='result';n.style.cssText='display:block;width:100%;text-align:left;border:0;cursor:pointer';n.textContent=`${x.brand} ${x.style} · ${x.color}`;
+   n.onclick=()=>{g.brand=x.brand;g.style=x.style;g.color=x.color;g.catalogImage=x.image||'';renderGarments()};results.appendChild(n)}
+ }catch(err){results.innerHTML='<div class="result">'+esc(err.message)+'. You can enter the style and color manually.</div>'}
+};
+// All adult and youth sizing available without requiring an active supplier API.
+// youth size toggles are appended in enhanced renderer; adult preset stays default.
+const checklistBar=document.createElement('div');checklistBar.className='checklist-actions';checklistBar.innerHTML='<button type="button" class="btn" onclick="addLegacyChecklist()">+ Add Checklist</button><button type="button" class="btn red" onclick="convertLegacyGarments()">Convert checklist to garment rows</button><span class="muted">Editable here; original Trello stays unchanged. Click Save Job to keep changes.</span>';
+checkListNode().after(checklistBar);
+
+
+// Receiving is a real, editable checkbox list per garment/color, not a separate grid.
+renderGarments=function(){
+ const wrap=document.getElementById('garments');wrap.innerHTML='';
+ for(const g of edit.garments||[]){
+  g.quantities=g.quantities||{};g.received=g.received||{};g.visibleSizes=g.visibleSizes||[...adultSizes];
+  const sizes=g.visibleSizes;
+  const e=document.createElement('div');e.className='garment';
+  const ordered=Object.values(g.quantities).reduce((a,v)=>a+(Number(v)||0),0);
+  const received=Object.keys(g.quantities).reduce((a,k)=>a+Math.min(Number(g.received[k]||0),Number(g.quantities[k]||0)),0);
+  const lines=sizes.filter(z=>Number(g.quantities[z]||0)>0);
+  const checked=lines.filter(z=>Number(g.received[z]||0)>=Number(g.quantities[z]||0)).length;
+  e.innerHTML=`<div class="headline"><span>GARMENT ${edit.garments.indexOf(g)+1}</span><button class="btn" data-remove>Remove</button></div>
+  <div class="grid2"><div class="formgroup"><label>Supplier</label><select class="field" data-supplier><option ${g.supplier==='S&S'?'selected':''}>S&S</option><option ${g.supplier==='SanMar'?'selected':''}>SanMar</option><option ${g.supplier==='Other'?'selected':''}>Other</option></select></div><div class="formgroup"><label>Brand</label><input class="field" data-brand value="${esc(g.brand||'')}" placeholder="Gildan"></div></div>
+  <div class="grid2"><div class="formgroup srchbox"><label>Style / catalog search</label><input class="field" data-style value="${esc(g.style||'')}" placeholder="Gildan 8000"><button type="button" class="btn" data-search style="margin-top:7px">⌕ Search supplier catalog</button><div class="results hidden"></div></div>
+  <div class="formgroup"><label>Garment color</label><input class="field" data-color list="color-list-${esc(g.id)}" value="${esc(g.color||'')}" placeholder="Safety Green"><datalist id="color-list-${esc(g.id)}">${(g.catalogColors||[]).map(c=>`<option value="${esc(c)}"></option>`).join('')}</datalist><div class="muted">Choose a supplier color or type your own</div></div></div>
+  <div class="garment-listbar"><strong>Garment receiving checklist</strong><span class="muted" data-progress>${checked}/${lines.length} sizes checked · ${received}/${ordered} pcs received</span></div>
+  <div class="size-presets"><button type="button" class="btn" data-preset="adult">Adult XS–6XL</button><button type="button" class="btn" data-preset="youth">Youth S–XL</button><button type="button" class="btn" data-preset="both">Adult + Youth</button><button type="button" class="btn" data-preset="used">Show ordered only</button></div>
+  <div class="muted" style="margin:7px 0">Click sizes to show/hide them; enter quantities and check off each size when it arrives.</div>
+  <div class="size-presets">${allSizes.map(z=>`<button type="button" class="sztoggle ${sizes.includes(z)?'':'off'}" data-size="${z}">${z}</button>`).join('')}</div>
+  <div class="garment-checklist"><div class="headrow"><span></span><span>Size</span><span>Ordered</span><span>Received</span></div>
+   ${sizes.map(z=>{const q=Number(g.quantities[z]||0),r=Number(g.received[z]||0),done=q>0&&r>=q;
+     return `<label class="checklist-row ${done?'done':''}"><input type="checkbox" data-check="${z}" ${done?'checked':''} ${q<=0?'disabled title="Enter quantity first"':''}><span class="checklist-label">${esc(z)}</span><input type="number" min="0" data-qty="${z}" value="${q}" aria-label="Ordered ${z}"><input type="number" min="0" max="${q}" data-received="${z}" value="${r}" aria-label="Received ${z}" title="Use for partial deliveries"></label>`}).join('')}
+  </div><div class="totals">${ordered} pieces ordered · ${received} received</div>`;
+  wrap.appendChild(e);
+  e.querySelector('[data-remove]').onclick=()=>removeGarment(g.id);
+  for(const key of ['supplier','brand','style','color'])e.querySelector('[data-'+key+']').addEventListener('change',evt=>gfield(g.id,key,evt.target.value));
+  e.querySelectorAll('[data-size]').forEach(b=>b.onclick=()=>toggleSize(g.id,b.dataset.size));
+  e.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{const p=b.dataset.preset;g.visibleSizes=p==='adult'?[...adultSizes]:p==='youth'?[...youthSizes]:p==='both'?[...allSizes]:allSizes.filter(z=>Number(g.quantities[z]||0)>0);renderGarments()});
+  e.querySelectorAll('[data-qty]').forEach(inp=>inp.onchange=()=>{setQty(g.id,inp.dataset.qty,inp.value);renderGarments()});
+  e.querySelectorAll('[data-received]').forEach(inp=>inp.onchange=()=>{setReceived(g.id,inp.dataset.received,inp.value);renderGarments()});
+  e.querySelectorAll('[data-check]').forEach(box=>box.onchange=()=>{markReceived(g.id,box.dataset.check)});
+  e.querySelector('[data-search]').onclick=()=>searchCatalog(g,e);
+ }
+ renderSummary();
+};
 
 load();setInterval(()=>{if(!edit)load()},12000);
 </script></body></html>
