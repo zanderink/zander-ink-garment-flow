@@ -38,8 +38,20 @@
 .artworkLightbox img{display:block;width:auto;height:auto;max-width:96vw;max-height:calc(100dvh - 104px);object-fit:contain;border-radius:6px;filter:drop-shadow(0 12px 30px #0009)}
 .artworkLightboxClose{position:absolute;top:12px;right:16px;background:#fff;color:#17191e;border:0;border-radius:10px;padding:10px 15px;font-size:16px;font-weight:800;cursor:pointer}
 .artworkLightboxLink{position:absolute;top:16px;left:18px;color:white;font-size:13px;text-decoration:underline;z-index:2}.artworkLightboxHint{position:absolute;bottom:9px;left:15px;right:15px;text-align:center;color:#d2d4d8;font-size:12px;pointer-events:none}
+
+/* Trello-style per-card artwork gallery */
+.artworkLightbox{padding:52px 65px 118px}
+.artworkLightbox img{max-width:calc(100vw - 160px);max-height:calc(100dvh - 195px)}
+.galleryArrow{position:absolute;top:44%;transform:translateY(-50%);width:46px;height:58px;border:1px solid #ffffff50;border-radius:10px;background:#21252bcc;color:white;font-size:36px;cursor:pointer;z-index:5}
+.galleryArrow:hover{background:#515660}.galleryPrev{left:12px}.galleryNext{right:12px}
+.galleryBottom{position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-direction:column;align-items:center;gap:6px;color:white}
+.galleryCounter{font-size:12px;font-weight:750;color:#e8e9ee}
+.galleryStrip{display:flex;gap:8px;max-width:min(95vw,950px);overflow-x:auto;padding:4px 6px}
+.galleryThumb{padding:2px;background:#2b2d33;border:2px solid transparent;border-radius:7px;cursor:pointer;flex:0 0 68px;height:55px}
+.galleryThumb.selected{border-color:#e32a3e}.galleryThumb img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;filter:none;border-radius:3px}
+@media(max-width:600px){.artworkLightbox{padding:58px 35px 120px}.artworkLightbox img{max-width:calc(100vw - 74px)}.galleryArrow{width:32px;height:44px;font-size:24px}.galleryPrev{left:0}.galleryNext{right:0}}
 </style></head><body><div class="app"><aside class="side"><img class="logo" src="/logo.png" alt="Zander Ink"><div class="smallcap">GARMENT MANAGEMENT</div><button class="nav active" onclick="setView('board')">▦ <span>Order Board</span></button><button class="nav" onclick="setView('open')">◉ <span>Open Jobs</span></button><button class="nav" onclick="setView('completed')">✓ <span>Completed</span></button><a href="https://zander-ink-live-board-production.up.railway.app" target="_blank">▤ <span>Production Board ↗</span></a><div class="sidebottom">ZANDER INK · GARMENT FLOW<br>Separate from your live production board</div></aside><main class="main"><header class="top"><div class="brand"><small>ZANDER INK</small>Garment Flow</div><div class="actions"><input id="search" class="search" placeholder="Search jobs..." oninput="render()"><button class="btn" id="trelloImportBtn" onclick="beginTrelloImport()">Import Trello History</button><label style="font-size:12px;display:flex;align-items:center;gap:6px"><input type="checkbox" id="showHistory" onchange="render()"> Show paid/completed lists</label><button class="btn" onclick="downloadBackup()">↓ Export Backup</button><button class="btn" onclick="document.getElementById('import').click()">Import</button><input type="file" id="import" class="hidden" accept="application/json" onchange="importBackup(this)"><button class="btn red" onclick="newCard()">+ New Job</button></div></header><div class="intro"><div><h2>Order Management Board</h2><p>Drag cards between stages. Open a card to manage garments, quantities, artwork and receiving.</p></div><div class="pills"><div class="pill">Jobs <b id="jobTotal">0</b></div><div class="pill">Garments <b id="pieceTotal">0</b></div><button class="btn" onclick="newColumn()">+ Add List</button></div></div><div class="notice" id="banner">New application preview. Your existing Trello and Production Board data are not changed.</div><div id="board" class="board"></div></main></div>
-<div class="modalBackdrop" id="overlay" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modalhead"><h3 id="modalTitle">New Job</h3><button class="btn" onclick="closeModal()">✕ Close</button></div><div class="cardCover" id="cardCover"><span class="coverEmpty">Add a mockup or artwork</span></div><div class="modalbody"><section><div class="cardTopline"><span style="font-size:12px;color:#77808c">In list:</span><strong id="currentListName">New Orders</strong></div><div id="trelloOrigin" style="display:none;margin:8px 0;font-size:12px"></div><div class="card-actions"><button onclick="showMovePanel()">↔ Move Card</button><button onclick="document.getElementById('artFile').click()">▧ Add Artwork</button><button onclick="document.getElementById('notes').focus()">☰ Notes</button><button onclick="document.getElementById('dueDate').focus()">▦ Dates</button><button onclick="document.getElementById('commentInput').focus()">☏ Comment</button></div><div class="formgroup"><label>Job / customer name</label><input id="title" class="field card-title-input" placeholder="e.g. Patriots Choice Plumbing"></div><div class="grid2"><div class="formgroup"><label>Order stage</label><select class="field" id="column"></select></div><div class="formgroup"><label>In-hands / due date (optional)</label><input class="field" type="date" id="dueDate"></div></div><div class="grid2"><div class="formgroup"><label>Production type</label><select class="field" id="process"><option>Screen Print</option><option>Embroidery</option><option>DTF</option><option>Other</option></select></div><div class="formgroup"><label>Delivery</label><select class="field" id="delivery"><option>Pickup</option><option>Ship</option></select></div></div><div class="formgroup"><label>Notes / instructions</label><textarea class="field" id="notes" rows="3" placeholder="Print notes, deadlines, customer requests..."></textarea></div><div class="section" id="trelloHistory" style="display:none"><h4>Original Trello checklists</h4><div id="trelloChecklistDetails"></div></div><div class="section"><h4>Garments & check-in</h4><div class="muted">Add a style and color for each garment. Enter ordered quantities, then check in each size when it arrives.</div><div id="garments"></div><div class="quick-add-sizes"><button type="button" class="btn red" onclick="quickAddChecklist('adult')">+ Quick Add Adult XS–6XL</button><button type="button" class="btn red" onclick="quickAddChecklist('youth')">+ Quick Add Youth XS–XL</button><button type="button" class="btn" onclick="addGarment()">+ Add Blank Garment</button></div><p class="garment-hint">Quick Add creates a garment checklist immediately. Enter quantities beside each size, check sizes off when received, and remove sizes you don't need. Click Save Job when finished.</p></div></section><aside class="rightpanel"><div class="formgroup"><label>Artwork / mockup</label><div class="preview" id="artPreview">No artwork attached</div><input style="margin-top:10px;width:100%;font-size:12px" id="artFile" type="file" accept="image/*" onchange="artUpload(this)"><button style="margin-top:7px" class="btn" onclick="clearArt()">Remove cover</button><div class="section"><h4>Attachments</h4><div class="muted">Store additional mockups and files with this card (images up to 2 MB each).</div><input type="file" multiple id="attachmentsInput" accept="image/*" style="max-width:100%;margin-top:8px" onchange="addAttachments(this)"><div id="attachmentGallery" class="attachmentGallery"></div></div></div><div class="formgroup"><label>Email</label><input id="email" class="field" type="email" placeholder="customer@company.com"></div><div class="formgroup"><label>Shipping address</label><textarea id="address" class="field" rows="3" placeholder="Street, city, state, ZIP"></textarea></div><div class="formgroup"><label>Order summary</label><div id="summary" class="totals">0 garments</div></div><div class="section"><h4>Comments and activity</h4><div class="activity-compose"><textarea id="commentInput" rows="3" class="field" placeholder="Write a comment..."></textarea><div style="display:flex;gap:6px;align-items:center"><input id="commentAuthor" class="field" style="max-width:130px" placeholder="Your initials" maxlength="30"><button class="btn red" onclick="addComment()">Add comment</button></div></div><div class="activity" id="activityLog"></div></div></aside></div><div class="modalfoot"><button id="deleteBtn" class="btn" style="color:#b31f2c" onclick="deleteCard()">Delete Card</button><div><button class="btn" onclick="closeModal()">Cancel</button> <button class="btn red" onclick="saveCard()">Save Job</button></div></div></div></div><div class="artworkLightbox" id="artworkLightbox" role="dialog" aria-modal="true" aria-label="Enlarged artwork" onclick="if(event.target===this)closeArtworkLightbox()"><a id="artworkLightboxLink" class="artworkLightboxLink" href="#" target="_blank" rel="noopener noreferrer" style="display:none">Open full image in Trello ↗</a><button type="button" class="artworkLightboxClose" onclick="closeArtworkLightbox()">✕ Close</button><img id="artworkLightboxImage" alt="Enlarged job artwork"><div class="artworkLightboxHint">Tap outside the image, press Esc, or click Close</div></div>
+<div class="modalBackdrop" id="overlay" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modalhead"><h3 id="modalTitle">New Job</h3><button class="btn" onclick="closeModal()">✕ Close</button></div><div class="cardCover" id="cardCover"><span class="coverEmpty">Add a mockup or artwork</span></div><div class="modalbody"><section><div class="cardTopline"><span style="font-size:12px;color:#77808c">In list:</span><strong id="currentListName">New Orders</strong></div><div id="trelloOrigin" style="display:none;margin:8px 0;font-size:12px"></div><div class="card-actions"><button onclick="showMovePanel()">↔ Move Card</button><button onclick="document.getElementById('artFile').click()">▧ Add Artwork</button><button onclick="document.getElementById('notes').focus()">☰ Notes</button><button onclick="document.getElementById('dueDate').focus()">▦ Dates</button><button onclick="document.getElementById('commentInput').focus()">☏ Comment</button></div><div class="formgroup"><label>Job / customer name</label><input id="title" class="field card-title-input" placeholder="e.g. Patriots Choice Plumbing"></div><div class="grid2"><div class="formgroup"><label>Order stage</label><select class="field" id="column"></select></div><div class="formgroup"><label>In-hands / due date (optional)</label><input class="field" type="date" id="dueDate"></div></div><div class="grid2"><div class="formgroup"><label>Production type</label><select class="field" id="process"><option>Screen Print</option><option>Embroidery</option><option>DTF</option><option>Other</option></select></div><div class="formgroup"><label>Delivery</label><select class="field" id="delivery"><option>Pickup</option><option>Ship</option></select></div></div><div class="formgroup"><label>Notes / instructions</label><textarea class="field" id="notes" rows="3" placeholder="Print notes, deadlines, customer requests..."></textarea></div><div class="section" id="trelloHistory" style="display:none"><h4>Original Trello checklists</h4><div id="trelloChecklistDetails"></div></div><div class="section"><h4>Garments & check-in</h4><div class="muted">Add a style and color for each garment. Enter ordered quantities, then check in each size when it arrives.</div><div id="garments"></div><div class="quick-add-sizes"><button type="button" class="btn red" onclick="quickAddChecklist('adult')">+ Quick Add Adult XS–6XL</button><button type="button" class="btn red" onclick="quickAddChecklist('youth')">+ Quick Add Youth XS–XL</button><button type="button" class="btn" onclick="addGarment()">+ Add Blank Garment</button></div><p class="garment-hint">Quick Add creates a garment checklist immediately. Enter quantities beside each size, check sizes off when received, and remove sizes you don't need. Click Save Job when finished.</p></div></section><aside class="rightpanel"><div class="formgroup"><label>Artwork / mockup</label><div class="preview" id="artPreview">No artwork attached</div><input style="margin-top:10px;width:100%;font-size:12px" id="artFile" type="file" accept="image/*" onchange="artUpload(this)"><button style="margin-top:7px" class="btn" onclick="clearArt()">Remove cover</button><div class="section"><h4>Attachments</h4><div class="muted">Store additional mockups and files with this card (images up to 2 MB each).</div><input type="file" multiple id="attachmentsInput" accept="image/*" style="max-width:100%;margin-top:8px" onchange="addAttachments(this)"><div id="attachmentGallery" class="attachmentGallery"></div></div></div><div class="formgroup"><label>Email</label><input id="email" class="field" type="email" placeholder="customer@company.com"></div><div class="formgroup"><label>Shipping address</label><textarea id="address" class="field" rows="3" placeholder="Street, city, state, ZIP"></textarea></div><div class="formgroup"><label>Order summary</label><div id="summary" class="totals">0 garments</div></div><div class="section"><h4>Comments and activity</h4><div class="activity-compose"><textarea id="commentInput" rows="3" class="field" placeholder="Write a comment..."></textarea><div style="display:flex;gap:6px;align-items:center"><input id="commentAuthor" class="field" style="max-width:130px" placeholder="Your initials" maxlength="30"><button class="btn red" onclick="addComment()">Add comment</button></div></div><div class="activity" id="activityLog"></div></div></aside></div><div class="modalfoot"><button id="deleteBtn" class="btn" style="color:#b31f2c" onclick="deleteCard()">Delete Card</button><div><button class="btn" onclick="closeModal()">Cancel</button> <button class="btn red" onclick="saveCard()">Save Job</button></div></div></div></div><div class="artworkLightbox" id="artworkLightbox" role="dialog" aria-modal="true" aria-label="Enlarged artwork" onclick="if(event.target===this)closeArtworkLightbox()"><a id="artworkLightboxLink" class="artworkLightboxLink" href="#" target="_blank" rel="noopener noreferrer" style="display:none">Open full image in Trello ↗</a><button type="button" class="artworkLightboxClose" onclick="closeArtworkLightbox()">✕ Close</button><img id="artworkLightboxImage" alt="Enlarged job artwork"><button type="button" class="galleryArrow galleryPrev" aria-label="Previous artwork" onclick="event.stopPropagation();galleryStep(-1)">‹</button><button type="button" class="galleryArrow galleryNext" aria-label="Next artwork" onclick="event.stopPropagation();galleryStep(1)">›</button><div class="galleryBottom" onclick="event.stopPropagation()"><div id="galleryCounter" class="galleryCounter"></div><div id="galleryStrip" class="galleryStrip" aria-label="Artwork thumbnails"></div></div></div>
 <div id="movePanel" class="movePanel" onclick="if(event.target===this)closeMovePanel()"><div class="moveBox"><div style="display:flex;justify-content:space-between"><h3>Move card</h3><button class="btn" onclick="closeMovePanel()">✕</button></div><label>Destination list</label><select id="moveList" class="field" onchange="updateMovePositions()"></select><label>Position</label><select id="movePosition" class="field"></select><div style="display:flex;gap:8px;margin-top:20px"><button class="btn" onclick="closeMovePanel()">Cancel</button><button class="btn red" style="flex:1" onclick="moveCardFromModal()">Move</button></div></div></div>
 <script>
 'use strict';let db={columns:[],cards:[]},edit=null,view='board',accessKey=localStorage.getItem('garmentFlowKey')||'';
@@ -225,38 +237,63 @@ renderGarments=function(){
 
 load();setInterval(()=>{if(!edit)load()},12000);
 
-// Clicking any actual job artwork opens a large preview; card body still opens Edit Job.
-function originalArtworkInfo(src){
- const card=edit || db.cards.find(c=>c.image===src) || db.cards.find(c=>c.image&&src.includes(c.image));
- const links=(card?.trelloAttachments||[]).filter(a=>/\.(png|jpe?g|gif|webp)(?:$|[?#])/i.test(a.url||'')||/\.(png|jpe?g|gif|webp)$/i.test(a.name||''));
- if(!links.length)return {original:'',trello:card?.trelloUrl||''};
- // The imported cover normally matches the first image attachment, or the cover name.
- const original=links[0]?.url||'';
- return {original,trello:card?.trelloUrl||''};
+// Every thumbnail opens its own image; arrows and filmstrip browse all images in a job.
+let galleryItems=[],galleryIndex=0;
+function imageRecord(src,name,original='',trello='') {return {src:String(src||''),name:String(name||'Artwork'),original:String(original||''),trello:String(trello||'')};}
+function isPicture(a){return /\.(png|jpe?g|gif|webp|bmp|avif|svg)(?:$|[?#])/i.test(a.url||'')||/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/i.test(a.name||'')||String(a.mimeType||'').startsWith('image/');}
+function galleryForCard(card){
+ const items=[];if(!card)return items;
+ const trello=(card.trelloAttachments||[]).filter(isPicture);
+ // Match the cover to the matching Trello attachment when metadata supports it.
+ const coverAtt=trello.find(a=>a.isCover||a.cover)||trello.find(a=>card.trelloCoverId&&a.id===card.trelloCoverId)||null;
+ if(card.image)items.push(imageRecord(card.image,'Card cover',coverAtt?.url||'',card.trelloUrl));
+ for(const a of card.attachments||[]){if(!a.data)continue;if(items.some(x=>x.src===a.data))continue;items.push(imageRecord(a.data,a.name||'Uploaded image','',card.trelloUrl));}
+ for(const a of trello){if(!a.url)continue;if(coverAtt&&a.url===coverAtt.url)continue;if(items.some(x=>x.src===a.url||x.original===a.url))continue;items.push(imageRecord(a.url,a.name||'Trello attachment','',card.trelloUrl));}
+ return items;
 }
-function openArtworkLightbox(src, alt='Job artwork'){
- if(!src)return;
- const overlay=document.getElementById('artworkLightbox');
- const image=document.getElementById('artworkLightboxImage');
- const link=document.getElementById('artworkLightboxLink');
- const info=originalArtworkInfo(src);
- const fallback=src;
- image.alt=alt;
- image.onload=()=>{image.style.maxWidth='96vw';image.style.maxHeight='calc(100dvh - 104px)';};
- image.onerror=()=>{if(image.src!==fallback){image.onerror=null;image.src=fallback;}};
- // Attempt the full-resolution attachment. A private Trello attachment may reject access;
- // in that case show the available preview rather than a broken image.
- image.src=info.original&&info.original!==src?info.original:fallback;
- const fullLink=info.trello||info.original;
- link.href=fullLink||'#';link.style.display=fullLink?'':'none';
- overlay.classList.add('on');
+function findGalleryCard(img){
+ if(edit)return edit;
+ const cardEl=img.closest('.card');
+ if(cardEl){const title=cardEl.querySelector('.cardTitle')?.textContent;const src=img.getAttribute('src');return db.cards.find(c=>c.image===src&&c.title===title)||db.cards.find(c=>c.image===src)||db.cards.find(c=>c.title===title)}
+ return db.cards.find(c=>c.image===img.getAttribute('src'));
 }
-function closeArtworkLightbox(){const overlay=document.getElementById('artworkLightbox');overlay.classList.remove('on');const image=document.getElementById('artworkLightboxImage');image.removeAttribute('src');image.onload=null;image.onerror=null;}
+function galleryShow(i){
+ if(!galleryItems.length)return;
+ galleryIndex=(i+galleryItems.length)%galleryItems.length;
+ const item=galleryItems[galleryIndex],picture=document.getElementById('artworkLightboxImage'),link=document.getElementById('artworkLightboxLink');
+ picture.onload=null;picture.onerror=null;picture.alt=item.name;
+ // Never substitute the first attachment for a separately clicked image.
+ const fallback=item.src;
+ picture.onerror=()=>{picture.onerror=null;if(picture.src!==fallback)picture.src=fallback;};
+ picture.src=item.original||fallback;
+ const full=item.trello||item.original||((/^https?:/).test(item.src)?item.src:'');
+ link.href=full||'#';link.style.display=full?'':'none';link.textContent=item.trello?'View original card in Trello ↗':'Open original image ↗';
+ document.getElementById('galleryCounter').textContent=`${galleryIndex+1} of ${galleryItems.length} · ${item.name}`;
+ document.querySelectorAll('.galleryArrow').forEach(x=>x.style.display=galleryItems.length>1?'':'none');
+ document.getElementById('galleryStrip').innerHTML=galleryItems.map((it,j)=>`<button type="button" class="galleryThumb ${j===galleryIndex?'selected':''}" data-gallery="${j}" aria-label="Show image ${j+1}" title="${esc(it.name)}"><img src="${esc(it.src)}" alt=""></button>`).join('');
+ document.querySelectorAll('[data-gallery]').forEach(b=>b.onclick=()=>galleryShow(Number(b.dataset.gallery)));
+ document.querySelector('.galleryThumb.selected')?.scrollIntoView({block:'nearest',inline:'nearest'});
+}
+function galleryStep(n){galleryShow(galleryIndex+n)}
+function openArtworkLightbox(img){
+ const card=findGalleryCard(img);
+ galleryItems=galleryForCard(card);
+ const clicked=img.getAttribute('src')||img.currentSrc||img.src;
+ let idx=galleryItems.findIndex(x=>x.src===clicked||x.original===clicked);
+ if(idx<0){galleryItems.push(imageRecord(clicked,img.alt||'Artwork','',card?.trelloUrl||''));idx=galleryItems.length-1;}
+ document.getElementById('artworkLightbox').classList.add('on');
+ galleryShow(idx);
+}
+function closeArtworkLightbox(){document.getElementById('artworkLightbox').classList.remove('on');const img=document.getElementById('artworkLightboxImage');img.removeAttribute('src');img.onerror=null;img.onload=null;galleryItems=[];}
 document.addEventListener('click',function(event){
- const image=event.target.closest('.card img,.cardCover img,.preview img,.attachmentItem img');
- if(!image)return;
- event.preventDefault();event.stopPropagation();
- openArtworkLightbox(image.currentSrc||image.src,image.alt||'Job artwork');
+ if(document.getElementById('artworkLightbox').classList.contains('on'))return;
+ const img=event.target.closest('.card img,.cardCover img,.preview img,.attachmentItem img');if(!img)return;
+ event.preventDefault();event.stopPropagation();openArtworkLightbox(img);
 },true);
-document.addEventListener('keydown',function(event){if(event.key==='Escape'&&document.getElementById('artworkLightbox').classList.contains('on')){event.preventDefault();event.stopPropagation();closeArtworkLightbox()}},true);
+document.addEventListener('keydown',function(event){
+ if(!document.getElementById('artworkLightbox').classList.contains('on'))return;
+ if(event.key==='Escape'){event.preventDefault();event.stopPropagation();closeArtworkLightbox()}
+ else if(event.key==='ArrowLeft'){event.preventDefault();galleryStep(-1)}
+ else if(event.key==='ArrowRight'){event.preventDefault();galleryStep(1)}
+},true);
 </script></body></html>
